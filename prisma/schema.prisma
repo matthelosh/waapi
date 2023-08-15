@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Chat {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  chatId    String    @unique
+  name      String
+  
+}
+
+model Token {
+  id          String    @id   @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  secret      String
+  key         String
+}
+
+model Sekolah {
+  id          String    @id   @default(uuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  npsn        String
+  nss         String
+  nama        String
+  alamat      String
+  desa        String
+  kecamatan   String
+  kabupaten   String
+  kode_pos    String
+  telp        String
+  email       String
+  website     String
+}
+
+
