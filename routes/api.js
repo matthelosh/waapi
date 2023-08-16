@@ -7,6 +7,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 const isAuth = async(req, res, next) => {
+    // console.log(JSON.stringify(req.header('key')));
     if (req.header('secret') && req.header('key')) {
       const auth = await prisma.Token.findFirst({
         where: {
@@ -14,7 +15,7 @@ const isAuth = async(req, res, next) => {
         }
       });
       // res.send(auth);
-      // console.log(auth);
+      // console.log();
       if(auth == null) {
         console.log('Credentials not found')
         res.send("Credentials invalid")
@@ -22,7 +23,7 @@ const isAuth = async(req, res, next) => {
       }
       next()
     } else {
-        res.send('Sertakan Rahasia dan Kuncinya');
+        res.json({status: 'fail', msg:'Sertakan Rahasia dan Kuncinya'});
     }
 };
 //

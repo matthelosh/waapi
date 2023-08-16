@@ -24,49 +24,52 @@ client.on('message', async(message) => {
   if (chat.isGroup) {
     if (chat.id._serialized == '628563580593-1487811497@g.us') {
       // message.reply("Maaf Bpk/Ibu, ini adalah pesan otomatis untuk eksperimen fitur kirim WA Otomatis. Ngapunten nggih, yang balas komputer bukan pak soleh. :)")
+      let msg = message.body.split(" ")
+
+      let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
+  
+      if(msg[0] == "info") {
+        let balasan = "";
+        // let sekolah = await prisma.sekolah.findFirst({where: {id: 'd&$890er'}})
+        // switch(msg[1]) {
+        //   default:
+        //     msg = "Mau tanya info apa?";
+        //     break;
+        // }
+        // console.log(typeof msg[1] === 'undefined')
+        let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
+        if (typeof msg[1] === 'undefined') {
+            balasan = `
+      Mau informasi apa?\n
+      NPSN: "info npsn"\n,
+      NSS: "info nss"\n,
+      Nama Sekolah: "info nama"\n
+      Alamat: "info alamat"\n
+      Telepon: "info telp"\n
+      Email: "info email"\n
+      Website: "info website"\n
+      Terima kasih
+                `;
+          } else {
+            balasan = sekolah[0][msg[1]]
+          }
+          message.reply(balasan)
+          // console.log(sekolah.npsn)
+
+      }
     }
-    prisma.Chat.upsert({
+    let saveChat = await prisma.Chat.upsert({
       where: {chatId: chat.id._serialized},
       update: {chatId: chat.id._serialized, name: chat.name},
       create: {chatId: chat.id._serialized, name: chat.name}
     });
-    // console.log("Grup "+chat.name+" disimpan.")
-    let msg = message.body.split(" ")
-
-    let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
- 
-    if(msg[0] == "info") {
-      let balasan = "";
-      // let sekolah = await prisma.sekolah.findFirst({where: {id: 'd&$890er'}})
-      // switch(msg[1]) {
-      //   default:
-      //     msg = "Mau tanya info apa?";
-      //     break;
-      // }
-      console.log(typeof msg[1] === 'undefined')
-      let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
-      if (typeof msg[1] === 'undefined') {
-        balasan = `
-  Mau informasi apa?\n
-  NPSN: "info npsn"\n,
-  NSS: "info nss"\n,
-  Nama Sekolah: "info nama"\n
-  Alamat: "info alamat"\n
-  Telepon: "info telp"\n
-  Email: "info email"\n
-  Website: "info website"\n
-  Terima kasih
-            `;
-      } else {
-        balasan = sekolah[0][msg[1]]
-      }
-      message.reply(balasan)
-      // console.log(sekolah.npsn)
-
-    }
+    // client.sendMessage(message.from, "Halo")
+    // console.log(chat)
+    
   } else {
     // Private msg
-    let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
+    
+      let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
     message.reply("tes");
   }
 })
@@ -75,28 +78,26 @@ client.initialize();
 
 const wa = {
   send : async(req, res) => {
-    const chatId = req.body?.isGroup == '1' ? req.body.chatId : req.body.chatId+'@c.us';
-    const pesan = req.body.pesan;
-    // console.log(req.body);
-    // return false;
-    if(!chatId || !pesan) {res.json({ status:'Mana No HP dan Pesannya?'})}
-    else {
-      if (client.isRegisteredUser(chatId)) {
-        if (req.body.isGroup == '1') {
-          // await client.sendMessage('628563580593-1487811497@g.us', pesan)
-          // let group = await client.getChatById('628563580593-1487811497');
-          client.sendMessage('628563580593-1487811497@g.us', pesan);
-          // console.log(group);
-        } else {
-          await client.sendMessage(chatId, pesan);
-        }
-
-        res.json({status: "Pesan terkirim", pesan });
-
+    // console.log(req.body.chatId)
+    try {
+      if(req.body.isGroup == '1') {
+        let sent = await client.sendMessage(req.body.chatId, req.body.pesan)
+        // console.log(sent)
+        res.json({status: 'ok', msg: 'Pesan terkirim ke grup.'})
       } else {
-        res.json({status: "gagal", msg: "No Hp Belum terdaftar"});
+        const isRegistered = await client.isRegisteredUser(req.body.chatId+'@c.us')
+        if (isRegistered) {
+          let sent = await client.sendMessage(req.body.chatId+'@c.us', req.body.pesan)
+          res.json({status: 'ok', msg: 'Pesan terkirim.'})
+        } else {
+          res.json({status: 'fail', msg: 'Nomor belum terdaftar di Whatsapp.'})
+        }
+        // console.log(isRegistered)
       }
+    } catch (err) {
+      res.json({status: err})
     }
+    // console.log(req.body.isGroup == '1')
   },
   groupIndex: async(req, res) => {
     try {
@@ -104,7 +105,7 @@ const wa = {
       res.json({status: 'ok', groups: groups})
       // console.log(groups)
     } catch (error) {
-      console.log(err)
+      console.log(error)
     }
     
   }
