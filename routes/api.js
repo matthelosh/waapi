@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 
 const isAuth = async(req, res, next) => {
     if (req.header('secret') && req.header('key')) {
-      const auth = await prisma.token.findFirst({
+      const auth = await prisma.Token.findFirst({
         where: {
           secret: req.header('secret'), key: req.header('key')
         }

@@ -25,7 +25,7 @@ client.on('message', async(message) => {
     if (chat.id._serialized == '628563580593-1487811497@g.us') {
       // message.reply("Maaf Bpk/Ibu, ini adalah pesan otomatis untuk eksperimen fitur kirim WA Otomatis. Ngapunten nggih, yang balas komputer bukan pak soleh. :)")
     }
-    prisma.chat.upsert({
+    prisma.Chat.upsert({
       where: {chatId: chat.id._serialized},
       update: {chatId: chat.id._serialized, name: chat.name},
       create: {chatId: chat.id._serialized, name: chat.name}
@@ -33,7 +33,7 @@ client.on('message', async(message) => {
     // console.log("Grup "+chat.name+" disimpan.")
     let msg = message.body.split(" ")
 
-    let sekolah = await prisma.$queryRaw`SELECT * FROM sekolah LIMIT 1`;
+    let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
  
     if(msg[0] == "info") {
       let balasan = "";
@@ -44,7 +44,7 @@ client.on('message', async(message) => {
       //     break;
       // }
       console.log(typeof msg[1] === 'undefined')
-      let sekolah = await prisma.$queryRaw`SELECT * FROM sekolah LIMIT 1`;
+      let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
       if (typeof msg[1] === 'undefined') {
         balasan = `
   Mau informasi apa?\n
@@ -100,7 +100,7 @@ const wa = {
   },
   groupIndex: async(req, res) => {
     try {
-      const groups = await prisma.chat.findMany()
+      const groups = await prisma.Chat.findMany()
       res.json({status: 'ok', groups: groups})
       // console.log(groups)
     } catch (error) {

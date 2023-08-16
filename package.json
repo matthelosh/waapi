@@ -4,6 +4,9 @@
   "description": "Tes WA-API",
   "main": "index.js",
   "license": "MIT",
+  "prisma": {
+    "seed" : "node prisma/seeders/token.js"
+  },
   "scripts": {
     "dev": "nodemon index.js"
   },
