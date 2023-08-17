@@ -25,15 +25,38 @@ client.on('message', async(message) => {
   let group = process.env.APP_ENV == 'local' ? '120363149742466007@g.us' : '628563580593-1487811497@g.us';
   if (chat.isGroup) {
     if (chat.id._serialized == group ) {
-        let balasan = await Info.sekolah(message);
-          message.reply(balasan)
+      let balasan = '';
+        // let balasan = await Info.sekolah(message);
+        let keywords = message.body.split(" ");
+        if (keywords[0].toLowerCase() == 'info') {
+          if (typeof keywords[1] === 'undefined') {
+            balasan = 'Info apa yang Anda butuhkan?';  
+          } else {
+            // balasan = await Info[keywords[1]](message);
+            switch(keywords[1]) {
+              default:
+                balasan = "Maaf, Saya belum memiliki info tentang "+keywords[1];
+                break;
+              case "sekolah":
+                balasan = await Info.sekolah(message);
+                break;
+              case "siswa" :
+                balasan = await Info.siswa(message);
+              break;
+            }
+          }
+        }
+
+      message.reply(balasan)
     }
-    let saveChat = await prisma.Chat.upsert({
+    
+
+
+    await prisma.Chat.upsert({
       where: {chatId: chat.id._serialized},
       update: {chatId: chat.id._serialized, name: chat.name},
       create: {chatId: chat.id._serialized, name: chat.name}
     });
-    
   } else {
     // Private msg
     
