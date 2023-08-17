@@ -61,7 +61,7 @@ client.on('message', async(message) => {
     // Private msg
     
       // let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
-    message.reply("tes");
+    // message.reply("tes");
   }
 })
 
