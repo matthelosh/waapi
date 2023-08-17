@@ -45,6 +45,8 @@ client.on('message', async(message) => {
               break;
             }
           }
+        } else {
+          return false
         }
 
       message.reply(balasan)
