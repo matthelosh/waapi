@@ -1,7 +1,7 @@
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const { PrismaClient } = require('@prisma/client');
-// import { PrismaClient } from '@prisma/client';
+const { Info } = require("./ManditaController");
 const { Buttons, GroupChat } = require('whatsapp-web.js/src/structures');
 
 const prisma = new PrismaClient()
@@ -19,44 +19,43 @@ client.on('ready', async() => {
   console.log('Client Siap');
 });
 
+
 client.on('message', async(message) => {
   let chat = await message.getChat();
   if (chat.isGroup) {
-    if (chat.id._serialized == '628563580593-1487811497@g.us') {
+    // Chat ID Production //
+    // if (chat.id._serialized == '628563580593-1487811497@g.us') {
+      // if(msg[0] == "info") {
+    // Chat Id Local //
+    if (chat.id._serialized == '120363149742466007@g.us') {
       // message.reply("Maaf Bpk/Ibu, ini adalah pesan otomatis untuk eksperimen fitur kirim WA Otomatis. Ngapunten nggih, yang balas komputer bukan pak soleh. :)")
-      let msg = message.body.split(" ")
+      // let msg = message.body.split(" ")
 
-      let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
+      // let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
   
-      if(msg[0] == "info") {
-        let balasan = "";
-        // let sekolah = await prisma.sekolah.findFirst({where: {id: 'd&$890er'}})
-        // switch(msg[1]) {
-        //   default:
-        //     msg = "Mau tanya info apa?";
-        //     break;
-        // }
-        // console.log(typeof msg[1] === 'undefined')
-        let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
-        if (typeof msg[1] === 'undefined') {
-            balasan = `
-      Mau informasi apa?\n
-      NPSN: "info npsn"\n,
-      NSS: "info nss"\n,
-      Nama Sekolah: "info nama"\n
-      Alamat: "info alamat"\n
-      Telepon: "info telp"\n
-      Email: "info email"\n
-      Website: "info website"\n
-      Terima kasih
-                `;
-          } else {
-            balasan = sekolah[0][msg[1]]
-          }
+      // if(msg[0] == "info") {
+        // let balasan = "";
+        // let sekolah = await prisma.$queryRaw`SELECT * FROM Sekolah LIMIT 1`;
+        // if (typeof msg[1] === 'undefined') {
+            // balasan = `
+      // Mau informasi apa?\n
+      // NPSN: "info npsn"\n,
+      // NSS: "info nss"\n,
+      // Nama Sekolah: "info nama"\n
+      // Alamat: "info alamat"\n
+      // Telepon: "info telp"\n
+      // Email: "info email"\n
+      // Website: "info website"\n
+      // Terima kasih
+                // `;
+          // } else {
+            // balasan = sekolah[0][msg[1]]
+          // }
+        let balasan = await Info.sekolah(message);
           message.reply(balasan)
           // console.log(sekolah.npsn)
 
-      }
+      // }
     }
     let saveChat = await prisma.Chat.upsert({
       where: {chatId: chat.id._serialized},
