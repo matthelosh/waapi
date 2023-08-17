@@ -29,6 +29,8 @@ const Info = {
             balasan = sekolah[msg[1]] 
           }
         return balasan;
+      } else {
+        return false
       }
   }
 }
