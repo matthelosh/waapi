@@ -77,10 +77,11 @@ const wa = {
       } else {
         const isRegistered = await client.isRegisteredUser(req.body.chatId+'@c.us')
         if (isRegistered) {
-          // console.log(req.body)
-          let pesan = req.body.media ? new MessageMedia('image/png', req.body.media) : req.body.pesan;
+          // console.log(req.body.media)
+          let pesan = !req.body.media ? req.body.pesan : new MessageMedia(req.body.media.type, req.body.media.file, req.body.media.name);
           // console.log(pesan)
-          let sent = await client.sendMessage(req.body.chatId+'@c.us', pesan)
+          let caption = req.body.media ? {caption: req.body.pesan} : {};
+          let sent = await client.sendMessage(req.body.chatId+'@c.us', pesan, caption)
           // console.log(sent)
           res.json({status: 'ok', msg: 'Pesan terkirim.'})
         } else {
