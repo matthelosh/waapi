@@ -8,7 +8,6 @@ const Info = {
     let balasan = '';
     let result = await axios.get(apiUrl+'/sekolah', {headers: {token: 'mandita'}})
     let sekolah = result.data.sekolah
-    // console.log(sekolah[msg[1]])
     balasan = `
 NPSN: ${sekolah.npsn},\n
 NSS: ${sekolah.nss},\n
@@ -24,38 +23,27 @@ NIP Kepala Sekolah: ${sekolah.ks.nip}
 `        
     return balasan
   },
-  siswa: async(message) => {
+  siswa: async(keyword) => {
     let balasan = '';
-    let keywords = message.body.split(" ")
-    // let kelas = (typeof keywords[2] === 'undefined') ? 'all' : keywords[2];
-    if (typeof keywords[2] === 'undefined') {
+    let qry = keyword.split(":");
+
+    if(qry.length < 2 || qry[1] == '') {
       let result = await axios.get(apiUrl+'/siswa?kelas=all', {headers: {token: 'mandita'}})
       balasan = result.data.siswas;
     } else {
-      let keyword = keywords[2].split(":")
-      switch(keyword[0]) {
-        default:
-          balasan = "Maaf, kata kunci belum saya ketahui";
-          break;
-        case "kelas":
-          if(typeof keyword[1] === 'undefined') {
-            balasan = "Maaf! Anda harus sertakan kode kelasnya setelah tanda : Contoh =\n info siswa kelas:5"
-          } else {
-            let result = await axios.get(apiUrl+'/siswa?kelas='+keyword[1], {headers: {token: 'mandita'}})
+      let result = await axios.get(apiUrl+'/siswa?nama='+qry[1], {headers: {token: 'mandita'}})
             balasan = result.data.siswas;
-          }
-          break;
-        case "nama":
-           if(typeof keyword[1] === 'undefined') {
-            balasan = "Maaf! Anda harus sertakan kode kelasnya setelah tanda : Contoh =\n info siswa nama:Jono"
-          } else {
-            let result = await axios.get(apiUrl+'/siswa?nama='+keyword[1], {headers: {token: 'mandita'}})
-            balasan = result.data.siswas;
-          }
-          break;
-
-      }
     }
+
+    return balasan; 
+  },
+  guru: async(keyword) => {
+    let balasan = '';
+    let qry = keyword.split(":");
+    let q = ( !keyword.includes(":") || keyword.split(":")[1] == '' ) ? 'all' : keyword.split(":")[1];
+    let result = await axios.get(apiUrl+'/guru?nama='+q, {headers: {token: 'mandita'}})
+    balasan = result.data.gurus;
+
     return balasan; 
   }
 }

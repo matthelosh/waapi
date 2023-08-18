@@ -25,24 +25,21 @@ client.on('message', async(message) => {
   if (chat.isGroup) {
     if (chat.id._serialized == group ) {
       let balasan = '';
-        // let balasan = await Info.sekolah(message);
         let keywords = message.body.split(" ");
         if (keywords[0].toLowerCase() == 'info') {
           if (typeof keywords[1] === 'undefined') {
             balasan = 'Info apa yang Anda butuhkan?';  
           } else {
-            // balasan = await Info[keywords[1]](message);
-            switch(keywords[1]) {
-              default:
-                balasan = "Maaf, Saya belum memiliki info tentang "+keywords[1];
-                break;
-              case "sekolah":
-                balasan = await Info.sekolah(message);
-                break;
-              case "siswa" :
-                balasan = await Info.siswa(message);
-              break;
+            if(/^sekolah/gi.test(keywords[1])) {
+              balasan = await Info.sekolah(message);
+            } else if(/^siswa/gi.test(keywords[1])) {
+              balasan = await Info.siswa(keywords[1]);
+            } else if(/^guru/gi.test(keywords[1])) {
+              balasan = await Info.guru(keywords[1]);
+            } else {
+              balasan = "Maaf, Saya belum memiliki info tentang "+keywords[1];
             }
+
           }
         } else {
           return false
