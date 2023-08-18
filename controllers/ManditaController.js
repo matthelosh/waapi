@@ -19,6 +19,8 @@ Kode Pos: ${sekolah.kode_pos},\n
 Telp: ${sekolah.telp},\n
 Email: ${sekolah.email},\n
 Website: ${sekolah.website}
+Kepala Sekolah: ${sekolah.ks.nama},\n
+NIP Kepala Sekolah: ${sekolah.ks.nip}
 `        
     return balasan
   },
