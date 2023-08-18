@@ -7,6 +7,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient()
 
 const isAuth = async(req, res, next) => {
+  // console.log(req.body)
   // console.log(req.headers);
     // console.log(JSON.stringify(req.header('key')));
     if (req.header('secret') && req.header('key')) {

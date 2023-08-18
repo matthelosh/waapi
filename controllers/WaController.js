@@ -1,8 +1,7 @@
 const qrcode = require('qrcode-terminal');
-const { Client, LocalAuth } = require('whatsapp-web.js');
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const { PrismaClient } = require('@prisma/client');
 const { Info } = require("./ManditaController");
-const { Buttons, GroupChat } = require('whatsapp-web.js/src/structures');
 
 const prisma = new PrismaClient()
 
@@ -74,13 +73,18 @@ const wa = {
     // console.log(req.body.chatId)
     try {
       if(req.body.isGroup == '1') {
-        let sent = await client.sendMessage(req.body.chatId, req.body.pesan)
+        let pesan = req.body.media ? new MessageMedia('image/png', req.body.media) : req.body.pesan;
+        await client.sendMessage(req.body.chatId, pesan)
         // console.log(sent)
         res.json({status: 'ok', msg: 'Pesan terkirim ke grup.'})
       } else {
         const isRegistered = await client.isRegisteredUser(req.body.chatId+'@c.us')
         if (isRegistered) {
-          let sent = await client.sendMessage(req.body.chatId+'@c.us', req.body.pesan)
+          // console.log(req.body)
+          let pesan = req.body.media ? new MessageMedia('image/png', req.body.media) : req.body.pesan;
+          // console.log(pesan)
+          let sent = await client.sendMessage(req.body.chatId+'@c.us', pesan)
+          // console.log(sent)
           res.json({status: 'ok', msg: 'Pesan terkirim.'})
         } else {
           res.json({status: 'fail', msg: 'Nomor belum terdaftar di Whatsapp.'})
