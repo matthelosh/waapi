@@ -36,6 +36,8 @@ client.on('message', async(message) => {
               balasan = await Info.siswa(keywords[1]);
             } else if(/^guru/gi.test(keywords[1])) {
               balasan = await Info.guru(keywords[1]);
+            } else if(/^agenda/gi.test(keywords[1])) {
+              balasan = await Info.agenda(keywords[1]);
             } else {
               balasan = "Maaf, Saya belum memiliki info tentang "+keywords[1];
             }

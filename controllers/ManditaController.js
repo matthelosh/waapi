@@ -39,13 +39,22 @@ NIP Kepala Sekolah: ${sekolah.ks.nip}
   },
   guru: async(keyword) => {
     let balasan = '';
-    let qry = keyword.split(":");
+    // let qry = keyword.split(":");
     let q = ( !keyword.includes(":") || keyword.split(":")[1] == '' ) ? 'all' : keyword.split(":")[1];
     let result = await axios.get(apiUrl+'/guru?nama='+q, {headers: {token: 'mandita'}})
     balasan = result.data.gurus;
 
     return balasan; 
-  }
+  },
+  agenda: async(keyword) => {
+    let balasan = '';
+    // let qry = keyword.split(":");
+    let q = ( !keyword.includes(":") || keyword.split(":")[1] == '' ) ? 'all' : keyword.split(":")[1];
+    let result = await axios.get(apiUrl+'/agenda?bulan='+q, {headers: {token: 'mandita'}})
+    balasan = result.data.agendas;
+    return balasan; 
+    
+  },
 }
 
 module.exports = {Info}
