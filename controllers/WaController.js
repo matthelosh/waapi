@@ -70,8 +70,12 @@ const wa = {
     // console.log(req.body.chatId)
     try {
       if(req.body.isGroup == '1') {
-        let pesan = req.body.media ? new MessageMedia('image/png', req.body.media) : req.body.pesan;
-        await client.sendMessage(req.body.chatId, pesan)
+
+          let pesan = !req.body.media ? req.body.pesan : new MessageMedia(req.body.media.type, req.body.media.file, req.body.media.name);
+        
+          let caption = req.body.media ? {caption: req.body.pesan} : {};
+        // let pesan = req.body.media ? new MessageMedia('image/png', req.body.media) : req.body.pesan;
+        await client.sendMessage(req.body.chatId, pesan, caption)
         // console.log(sent)
         res.json({status: 'ok', msg: 'Pesan terkirim ke grup.'})
       } else {
