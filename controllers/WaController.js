@@ -14,13 +14,13 @@ client.on('qr', (qr) => {
   qrcode.generate(qr, {small: true});
 })
 
-client.on('authenticated', (session) => {
-  console.log(JSON.parse(session));
-});
+// client.on('authenticated', (session) => {
+  // console.log(JSON.parse(session));
+// });
 
-client.on('auth_failure', (err) => {
-  console.log(err);
-});
+// client.on('auth_failure', (err) => {
+  // console.log(err);
+// });
 
 client.on('ready', async() => {
   console.log('Client Siap');
@@ -76,6 +76,10 @@ client.on('message', async(message) => {
 client.initialize();
 
 const wa = {
+  info : async(req, res) => {
+    // res.send(client);
+    res.send(client.getState());
+  },
   send : async(req, res) => {
     // console.log(req.body.chatId)
     try {

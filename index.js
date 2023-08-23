@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const port = 3000;
 const ApiRoutes = require("./routes/api");
 const HomeRoutes = require("./routes/web");
+const wa = require("./controllers/WaController");
 // const db = require('./config/db');
 
 // app.use(db);
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50
 app.use("/api", ApiRoutes);
 
 app.get('/', HomeRoutes);
+app.get("/status", wa.info);
 
 app.listen(port, () => {
       console.log(`Waapi running on port ${port}`);
