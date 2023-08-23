@@ -78,7 +78,7 @@ client.initialize();
 const wa = {
   info : async(req, res) => {
     // res.send(client);
-    res.send(client.getState());
+    res.send(client.info);
   },
   send : async(req, res) => {
     // console.log(req.body.chatId)
