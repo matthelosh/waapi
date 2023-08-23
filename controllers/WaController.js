@@ -9,6 +9,8 @@ const client = new Client({
   authStrategy: new LocalAuth(),
 })
 
+
+
 client.on('qr', (qr) => {
   console.log('QR RECEIVED', qr);
   qrcode.generate(qr, {small: true});
