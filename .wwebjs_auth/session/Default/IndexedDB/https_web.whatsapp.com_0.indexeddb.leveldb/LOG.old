@@ -1,0 +1,25 @@
+2023/08/23-12:13:01.643 12b4 Reusing MANIFEST D:\Projects\waapi\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-018965
+2023/08/23-12:13:01.644 12b4 Recovering log #20320
+2023/08/23-12:13:01.645 12b4 Reusing old log D:\Projects\waapi\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/020320.log 
+2023/08/23-12:13:01.645 12b4 Delete type=2 #20319
+2023/08/23-12:13:01.900 12b4 Level-0 table #20325: started
+2023/08/23-12:13:01.903 12b4 Level-0 table #20325: 13573 bytes OK
+2023/08/23-12:13:01.904 12b4 Delete type=0 #20320
+2023/08/23-12:13:01.905 12b4 Manual compaction at level-0 from '\x00W\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00X\x00\x00\x00' @ 0 : 0; will stop at '\x00W\x0a\x02\x03\x00\x00\x00\x00\x00\x00\xf0?' @ 36069962 : 1
+2023/08/23-12:13:01.905 12b4 Compacting 1@0 + 1@1 files
+2023/08/23-12:13:01.919 12b4 Generated table #20326@0: 7425 keys, 61873 bytes
+2023/08/23-12:13:01.919 12b4 Compacted 1@0 + 1@1 files => 61873 bytes
+2023/08/23-12:13:01.919 12b4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/08/23-12:13:01.920 12b4 Delete type=2 #20325
+2023/08/23-12:13:01.920 12b4 Manual compaction at level-0 from '\x00W\x0a\x02\x03\x00\x00\x00\x00\x00\x00\xf0?' @ 36069962 : 1 .. '\x00X\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/08/23-12:13:12.426 3794 Level-0 table #20328: started
+2023/08/23-12:13:12.428 3794 Level-0 table #20328: 20850 bytes OK
+2023/08/23-12:13:12.429 3794 Delete type=2 #20322
+2023/08/23-12:13:12.429 3794 Delete type=0 #20324
+2023/08/23-12:13:12.429 3794 Manual compaction at level-0 from '\x00[\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\\x00\x00\x00' @ 0 : 0; will stop at '\x00[\x00\x00\x05' @ 36071512 : 1
+2023/08/23-12:13:12.429 3794 Compacting 1@0 + 1@1 files
+2023/08/23-12:13:12.447 3794 Generated table #20329@0: 8150 keys, 73162 bytes
+2023/08/23-12:13:12.447 3794 Compacted 1@0 + 1@1 files => 73162 bytes
+2023/08/23-12:13:12.447 3794 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/08/23-12:13:12.447 3794 Delete type=2 #20328
+2023/08/23-12:13:12.448 3794 Manual compaction at level-0 from '\x00[\x00\x00\x05' @ 36071512 : 1 .. '\x00\\x00\x00\x00' @ 0 : 0; will stop at (end)
