@@ -14,6 +14,14 @@ client.on('qr', (qr) => {
   qrcode.generate(qr, {small: true});
 })
 
+client.on('authenticated', (session) => {
+  console.log(JSON.parse(session));
+});
+
+client.on('auth_failure', (err) => {
+  console.log(err);
+});
+
 client.on('ready', async() => {
   console.log('Client Siap');
 });
@@ -61,7 +69,7 @@ client.on('message', async(message) => {
     // Private msg
     
       // let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
-    // message.reply("tes");
+    message.reply("tes");
   }
 })
 
