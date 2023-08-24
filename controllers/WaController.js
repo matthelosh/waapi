@@ -37,6 +37,9 @@ client.on('message', async(message) => {
     if (chat.id._serialized == group ) {
       let balasan = '';
         let keywords = message.body.split(" ");
+        if(keywords.length > 2) {
+          balasan = "Saat ini saya hanya bisa menjawab 2 (dua) buah kata kunci saja.\n Seperti \'info siswa\'"
+        }
         if (keywords[0].toLowerCase() == 'info') {
           if (typeof keywords[1] === 'undefined') {
             balasan = 'Info apa yang Anda butuhkan?';  

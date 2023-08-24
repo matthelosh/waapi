@@ -59,7 +59,11 @@ NIP Kepala Sekolah: ${sekolah.ks.nip}
 
 const Bos = {
   anggaran: async(keyword) => {
-    let result = await axios.get(apiUrl+'/bos/rkas/tersedia', {headers: {token: 'mandita'}})
+    // bos anggaran:tersedia | terlaksana | null
+    let balasan = "";
+    let q = ( !keyword.includes(":") || keyword.split(":")[1] == '' ) ? 'all' : keyword.split(":")[1];
+    let result = await axios.get(apiUrl+'/bos/rkas?q='+q, { header: {token: 'mandita'}})
+    
 
     balasan = result.data.rkas;
     return balasan;
