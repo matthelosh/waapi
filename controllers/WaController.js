@@ -55,7 +55,16 @@ client.on('message', async(message) => {
 
           }
         } else {
-          return false
+          // return false
+          if (keywords[0].toLowerCase() == 'bos') {
+            if (typeof keywords[1] === 'undefined') {
+            balasan = 'Informasi BOS apa yang ingin Anda ketahui?';
+          } else {
+            if(/^anggaran/gi.test(keywords[1])) {
+              balasan = await Bos.anggaran(keywords[1]);
+            }
+          }
+        }
         }
       await chat.sendStateTyping()
                 .then(() => message.reply(balasan))

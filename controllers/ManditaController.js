@@ -57,4 +57,14 @@ NIP Kepala Sekolah: ${sekolah.ks.nip}
   },
 }
 
+const Bos = {
+  anggaran: async(keyword) => {
+    let result = await axios.get(apiUrl+'/bos/rkas/tersedia', {Headers: {token: 'mandita'}})
+
+    balasan = result.data.rkas;
+    return balasan;
+  }
+
+}
+
 module.exports = {Info}
