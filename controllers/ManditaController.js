@@ -59,7 +59,7 @@ NIP Kepala Sekolah: ${sekolah.ks.nip}
 
 const Bos = {
   anggaran: async(keyword) => {
-    let result = await axios.get(apiUrl+'/bos/rkas/tersedia', {Headers: {token: 'mandita'}})
+    let result = await axios.get(apiUrl+'/bos/rkas/tersedia', {headers: {token: 'mandita'}})
 
     balasan = result.data.rkas;
     return balasan;
@@ -67,4 +67,4 @@ const Bos = {
 
 }
 
-module.exports = {Info}
+module.exports = {Info, Bos}
