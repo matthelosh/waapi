@@ -57,8 +57,8 @@ client.on('message', async(message) => {
         } else {
           return false
         }
-
-      message.reply(balasan)
+      await chat.sendStateTyping()
+                .then(() => message.reply(balasan))
     }
     
 
