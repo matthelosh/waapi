@@ -5,3 +5,4 @@ node_modules
 .wwebjs_cache/*
 config/db.js
 prisma/seeders/*
+prisma/token.js
