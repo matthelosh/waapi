@@ -4,11 +4,15 @@ const { PrismaClient } = require('@prisma/client');
 const { Info ,Bos} = require("./ManditaController");
 const util = require('util');
 const schedule = require('node-schedule');
+const fs = require('fs');
 
 const Remind = require('./Remainder');
 const prisma = new PrismaClient()
 
 const client = new Client({
+  puppeteer: {
+    executablePath: process.env.APP_ENV == 'local' ? 'C:\\Users\\matts\\AppData\\Local\\Google\\Chrome\\Application\\Chrome.exe' : "/usr/bin/google-chrome"
+  },
   authStrategy: new LocalAuth(),
 })
 
@@ -33,16 +37,18 @@ client.on('ready', async() => {
   remindSeragam();
 });
 
-const remindSeragam = () => {
+const remindSeragam = async() => {
   let chat = client.getChatById("6285173303784@c.us");
-  let pgri = MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/pgri.png");
+  let pgri = await MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/pgri.png");
+  let korpri = await MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/Korpri.gif");
 
-  schedule.scheduleJob("* 13 21 24 * *", () => {
-    // chat.sendStateTyping().then(() => chat.sendMessage("Halo"))
-    // console.log(chat)
-    client.sendMessage("6285173303784@c.us", new MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/pgri.png", {filename: "Jangan lupa Besok Pakai Seragam PGRI, ya.."}))
-    
-  })
+  schedule.scheduleJob("50 15 6 25 * *", () => {
+    client.sendMessage("628563580593-1487811497@g.us", pgri, {caption: "Jangan lupa pakai PGRI ya"});
+   });
+
+  schedule.scheduleJob("30 15 6 17 * *", () => {
+    client.sendMessage("628563580593-1487811497@g.us", korpri, {caption: "Jangan lupa pakai Korpri ya"});
+  });
 }
 
 
@@ -53,7 +59,7 @@ client.on('message', async(message) => {
     if (chat.id._serialized == group ) {
       let balasan = '';
         let keywords = message.body.split(" ");
-        if(keywords.length > 2) {
+        if(keywords.length > 2 && (keywords[0] == "info" || keywords[0] == 'bos' )) {
           balasan = "Saat ini saya hanya bisa menjawab 2 (dua) buah kata kunci saja.\n Seperti \'info siswa\'"
         }
         if (keywords[0].toLowerCase() == 'info') {
