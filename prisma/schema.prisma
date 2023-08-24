@@ -44,4 +44,12 @@ model Sekolah {
   website     String
 }
 
+model Jawaban {
+  id        String    @id   @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 

@@ -115,8 +115,29 @@ client.on('message', async(message) => {
     });
   } else {
     // Private msg
-    await chat.sendStateTyping()
-              .then(() => message.reply('Sebentar ya..'))
+    // await chat.sendStateTyping()
+    //           .then(() => message.reply('Sebentar ya..'))
+    let keywords = ['belajar', 'ujian'];
+    if(message.body.toLocaleLowerCase().includes("belajar") || message.body.toLocaleLowerCase().includes("ujian")) {
+      let teks = message.body.split(":");
+      if(teks[0] == "belajar") {
+        let simpan = await prisma.Jawaban.create({
+          data:{question: teks[1], answer: teks[2]}
+        });
+        await chat.sendStateTyping()
+              .then(() => message.reply('Jawaban Disimpan'))
+      }
+    } else {
+      let jawaban = await prisma.Jawaban.findFirst({
+        where: {
+          question: {
+            contains: message.body
+          }
+        }
+      });
+      await chat.sendStateTyping()
+              .then(() => message.reply(jawaban.answer))
+    }
       // let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
     // message.reply("tes");
   }
