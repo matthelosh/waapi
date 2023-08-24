@@ -101,7 +101,7 @@ client.on('message', async(message) => {
         })
       } else if(message.body.toLowerCase().includes("mandita")) {
         let pesan = await MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/mandita.png");
-        await chat.sendStateTyping().then(() => message.reply(pesan, {caption: "Ada yang memanggil saya?"}))
+        await chat.sendStateTyping().then(() => chat.sendMessage(pesan, {caption: "Ada yang memanggil saya?"}))
       }      
       
                 
