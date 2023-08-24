@@ -58,7 +58,7 @@ client.on('message', async(message) => {
   if (chat.isGroup) {
     if (chat.id._serialized == group ) {
       let balasan = '';
-      let keywords = ['info', 'bos'];
+      let keywords = ['info', 'bos', 'mandita'];
       let teks = message.body.split(" ");
       if(keywords.includes(teks[0].toLocaleLowerCase())) {
         if (teks.length > 2 ) {
@@ -79,7 +79,6 @@ client.on('message', async(message) => {
               } else {
                 balasan = "Maaf, Saya belum memiliki info tentang "+teks[1];
               }
-  
             }
           } else if (teks[0].toLowerCase() == 'bos') {
               if (typeof teks[1] === 'undefined') {
@@ -100,7 +99,10 @@ client.on('message', async(message) => {
                      message.reply(balasan)
                     }, 1000);
         })
-      }         
+      } else if(message.body.toLowerCase().includes("mandita")) {
+        let pesan = await MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/mandita.png");
+        await chat.sendStateTyping().then(() => message.reply(pesan, {caption: "Ada yang memanggil saya?"}))
+      }      
       
                 
 
