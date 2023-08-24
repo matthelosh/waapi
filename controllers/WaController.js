@@ -58,7 +58,7 @@ client.on('message', async(message) => {
   if (chat.isGroup) {
     if (chat.id._serialized == group ) {
       let balasan = '';
-      let keywords = ['info', 'bos', 'mandita'];
+      let keywords = ['info', 'bos'];
       let teks = message.body.split(" ");
       if(keywords.includes(teks[0].toLocaleLowerCase())) {
         if (teks.length > 2 ) {
