@@ -3,7 +3,9 @@ const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const { PrismaClient } = require('@prisma/client');
 const { Info ,Bos} = require("./ManditaController");
 const util = require('util');
+const schedule = require('node-schedule');
 
+const Remind = require('./Remainder');
 const prisma = new PrismaClient()
 
 const client = new Client({
@@ -27,7 +29,21 @@ client.on('qr', (qr) => {
 
 client.on('ready', async() => {
   console.log('Client Siap');
+  // Remind.seragam();
+  remindSeragam();
 });
+
+const remindSeragam = () => {
+  let chat = client.getChatById("6285173303784@c.us");
+  let pgri = MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/pgri.png");
+
+  schedule.scheduleJob("* 13 21 24 * *", () => {
+    // chat.sendStateTyping().then(() => chat.sendMessage("Halo"))
+    // console.log(chat)
+    client.sendMessage("6285173303784@c.us", new MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/pgri.png", {filename: "Jangan lupa Besok Pakai Seragam PGRI, ya.."}))
+    
+  })
+}
 
 
 client.on('message', async(message) => {
