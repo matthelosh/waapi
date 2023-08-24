@@ -62,10 +62,11 @@ const Bos = {
     // bos anggaran:tersedia | terlaksana | null
     let balasan = "";
     let q = ( !keyword.includes(":") || keyword.split(":")[1] == '' ) ? 'all' : keyword.split(":")[1];
-    let result = await axios.get(apiUrl+'/bos/rkas?q='+q, { header: {token: 'mandita'}})
+    let result = await axios.get(apiUrl+'/bos/rkas?q='+q, { headers: {token: 'mandita'}})
     
 
     balasan = result.data.rkas;
+    // console.log(balasan);
     return balasan;
   }
 

@@ -1,7 +1,7 @@
 const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const { PrismaClient } = require('@prisma/client');
-const { Info } = require("./ManditaController");
+const { Info ,Bos} = require("./ManditaController");
 const util = require('util');
 
 const prisma = new PrismaClient()
@@ -65,12 +65,20 @@ client.on('message', async(message) => {
           } else {
             if(/^anggaran/gi.test(keywords[1])) {
               balasan = await Bos.anggaran(keywords[1]);
+            } else {
+              balasan = "Maaf, saya belum tahu jawabannya. :)"
             }
           }
         }
         }
       await chat.sendStateTyping()
-                .then(() => message.reply(balasan))
+                .then(() => {
+                    setTimeout(() => {
+                     message.reply(balasan)
+                    }, 1000);
+      })
+                
+
     }
     
 

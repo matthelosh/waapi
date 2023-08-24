@@ -1,9 +1,0 @@
-2023/08/23-16:37:39.669 314c Reusing MANIFEST D:\Projects\waapi\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-018965
-2023/08/23-16:37:39.670 314c Recovering log #20408
-2023/08/23-16:37:39.677 314c Reusing old log D:\Projects\waapi\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/020408.log 
-2023/08/23-16:39:14.707 314c Compacting 1@1 + 1@2 files
-2023/08/23-16:39:14.857 314c Generated table #20412@1: 12831 keys, 494516 bytes
-2023/08/23-16:39:14.857 314c Compacted 1@1 + 1@2 files => 494516 bytes
-2023/08/23-16:39:14.858 314c compacted to: files[ 0 0 1 0 0 0 0 ]
-2023/08/23-16:39:14.859 314c Delete type=2 #20250
-2023/08/23-16:39:14.859 314c Delete type=2 #20410
