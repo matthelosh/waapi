@@ -2,6 +2,7 @@ const qrcode = require('qrcode-terminal');
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const { PrismaClient } = require('@prisma/client');
 const { Info } = require("./ManditaController");
+const util = require('util');
 
 const prisma = new PrismaClient()
 
@@ -17,7 +18,7 @@ client.on('qr', (qr) => {
 })
 
 // client.on('authenticated', (session) => {
-  // console.log(JSON.parse(session));
+  // console.log(util.format(session));
 // });
 
 // client.on('auth_failure', (err) => {
@@ -69,9 +70,10 @@ client.on('message', async(message) => {
     });
   } else {
     // Private msg
-    
+    await chat.sendStateTyping()
+              .then(() => message.reply('Sebentar ya..'))
       // let button = new Buttons('Button body', [{body: 'Terima'}, {body: 'Tolak'}], 'footer');
-    message.reply("tes");
+    // message.reply("tes");
   }
 })
 
