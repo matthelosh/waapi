@@ -58,52 +58,53 @@ client.on('message', async(message) => {
   if (chat.isGroup) {
     if (chat.id._serialized == group ) {
       let balasan = '';
-        let keywords = message.body.split(" ");
-        if(keywords.length > 2 && (keywords[0] == "info" || keywords[0] == 'bos' )) {
-          balasan = "Saat ini saya hanya bisa menjawab 2 (dua) buah kata kunci saja.\n Seperti \'info siswa\'"
-        }
-        if (keywords[0].toLowerCase() == 'info') {
-          if (typeof keywords[1] === 'undefined') {
-            balasan = 'Info apa yang Anda butuhkan?';  
-          } else {
-            if(/^sekolah/gi.test(keywords[1])) {
-              balasan = await Info.sekolah(message);
-            } else if(/^siswa/gi.test(keywords[1])) {
-              balasan = await Info.siswa(keywords[1]);
-            } else if(/^guru/gi.test(keywords[1])) {
-              balasan = await Info.guru(keywords[1]);
-            } else if(/^agenda/gi.test(keywords[1])) {
-              balasan = await Info.agenda(keywords[1]);
-            } else {
-              balasan = "Maaf, Saya belum memiliki info tentang "+keywords[1];
-            }
-
-          }
+      let keywords = ['info', 'bos'];
+      let teks = message.body.split(" ");
+      if(keywords.includes(teks[0].toLocaleLowerCase())) {
+        if (teks.length > 2 ) {
+          balasan = "Maaf! untuk saat ini saya hanya dapat menjawab 2 kata kunci. Misalnya \'info siswa\'";
         } else {
-          // return false
-          if (keywords[0].toLowerCase() == 'bos') {
-            if (typeof keywords[1] === 'undefined') {
-            balasan = 'Informasi BOS apa yang ingin Anda ketahui?';
-          } else {
-            if(/^anggaran/gi.test(keywords[1])) {
-              balasan = await Bos.anggaran(keywords[1]);
+          if (teks[0].toLowerCase() == 'info') {
+            if (typeof teks[1] === 'undefined') {
+              balasan = 'Info apa yang Anda butuhkan?';  
             } else {
-              balasan = "Maaf, saya belum tahu jawabannya. :)"
+              if(/^sekolah/gi.test(teks[1])) {
+                balasan = await Info.sekolah(message);
+              } else if(/^siswa/gi.test(teks[1])) {
+                balasan = await Info.siswa(teks[1]);
+              } else if(/^guru/gi.test(teks[1])) {
+                balasan = await Info.guru(teks[1]);
+              } else if(/^agenda/gi.test(teks[1])) {
+                balasan = await Info.agenda(teks[1]);
+              } else {
+                balasan = "Maaf, Saya belum memiliki info tentang "+teks[1];
+              }
+  
             }
+          } else if (teks[0].toLowerCase() == 'bos') {
+              if (typeof teks[1] === 'undefined') {
+                balasan = 'Informasi BOS apa yang ingin Anda ketahui?';
+              } else {
+                if(/^anggaran/gi.test(teks[1])) {
+                  balasan = await Bos.anggaran(teks[1]);
+                } else {
+                  balasan = "Maaf, saya belum tahu jawabannya. :)"
+                }
+              }
           }
         }
-        }
-      await chat.sendStateTyping()
+
+        await chat.sendStateTyping()
                 .then(() => {
                     setTimeout(() => {
                      message.reply(balasan)
                     }, 1000);
-      })
+        })
+      }         
+      
                 
 
     }
-    
-
 
     await prisma.Chat.upsert({
       where: {chatId: chat.id._serialized},
