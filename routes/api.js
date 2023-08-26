@@ -1,5 +1,6 @@
 const express = require('express');
 const wa = require("../controllers/WaController");
+const cse = require("../controllers/CseController");
 const router = express.Router();
 // const connection = require("../config/db");
 const { PrismaClient } = require('@prisma/client');
@@ -34,6 +35,8 @@ const isAuth = async(req, res, next) => {
 router.post("/wa/send", isAuth, wa.send);
 
 router.post("/wa/groups", isAuth, wa.groupIndex)
+
+// router.get("/cse", cse.jawab)
 
 
 module.exports = router;

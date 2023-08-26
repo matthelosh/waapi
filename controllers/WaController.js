@@ -5,6 +5,7 @@ const { Info ,Bos} = require("./ManditaController");
 const util = require('util');
 const schedule = require('node-schedule');
 const fs = require('fs');
+const Cse = require("./CseController");
 
 const Remind = require('./Remainder');
 const prisma = new PrismaClient()
@@ -102,7 +103,11 @@ client.on('message', async(message) => {
       } else if(message.body.toLowerCase().includes("mandita")) {
         let pesan = await MessageMedia.fromUrl("https://is3.cloudhost.id/sdn1bedalisodo/images/mandita.png");
         await chat.sendStateTyping().then(() => chat.sendMessage(pesan, {caption: "Ada yang memanggil saya?"}))
-      }      
+      } else if(message.body.toLowerCase().startsWith("Carikan Info Tentang".toLowerCase())) {
+        balasan = await Cse.jawab(message.body.substr(21))
+        // console.log(balasan)
+        await chat.sendStateTyping().then(() => message.reply(balasan))
+      }     
       
                 
 
