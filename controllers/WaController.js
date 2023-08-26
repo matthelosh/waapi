@@ -107,7 +107,23 @@ client.on('message', async(message) => {
         balasan = await Cse.jawab(message.body.substr(21))
         // console.log(balasan)
         await chat.sendStateTyping().then(() => message.reply(balasan))
-      }     
+      } else if(message.body.toLowerCase().startsWith("Berapa ".toLowerCase())) {
+        let result = await Cse.math(message.body.substring(7))
+        console.log(result)
+        await chat.sendStateTyping().then(() => message.reply(result))
+      } else if(message.body.toLocaleLowerCase().startsWith('terjemahkan ke')) {
+        let result = "";
+        let valid = message.body.includes(":")
+        if (!valid) {
+          result = "Pisahkan kata / kalimat dengan tanda titik dua (:)";
+        } else {
+        let text = message.body.split(":")
+        let lang = text[0].split(" ")[2].toLowerCase() == 'inggris' ? 'en' : (text[0].split(" ")[2].toLowerCase() == 'arab' ? 'ar' : 'id')
+        result = await Cse.translate(text[1], lang)
+        console.log(result)
+        }
+        await chat.sendStateTyping().then(() => message.reply(result))
+      }
       
                 
 

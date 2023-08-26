@@ -1,5 +1,7 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
+const math = require('mathjs')
+const {translate} = require('@vitalets/google-translate-api');
 
 const cse =  {
     jawab: async(q = 'SD Negeri 1 Bedalisodo') => {
@@ -29,7 +31,17 @@ ${item.snippet}
         });
         // res.send(response)
         return response;
+    },
+    math: async(string) => {
+        expression = string.replace(/[^x0-9:/+/-]/g, "").replace("x","*").replace(":","/").replace(" ","")
+        result = math.evaluate(expression)
+        return (typeof result === 'undefined') ? "Maaf, untuk saat ini saya hanya bisa menjawab operasi matematika sederhana." : `Hasil ${string} adalah: ${result}`
+    },
+    translate: async(string, lang='id') => {
+        const { text } = await translate(string, {to: lang})
+        return text
     }
+
 }
 
 module.exports = cse
